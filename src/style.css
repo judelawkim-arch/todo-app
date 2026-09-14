@@ -1,0 +1,205 @@
+/* Today's To-Do List — styles
+   Expected HTML structure:
+
+   <div class="app">
+     <h1>Today's To-Do</h1>
+     <form class="task-form">
+       <input type="text" class="task-input" placeholder="Add a task…">
+       <button type="submit" class="add-btn">Add</button>
+     </form>
+     <ul class="task-list">
+       <li class="task">                    <!-- add class "completed" when done -->
+         <input type="checkbox" class="task-checkbox">
+         <span class="task-text">Buy milk</span>
+         <button type="button" class="task-delete" aria-label="Delete task">×</button>
+       </li>
+     </ul>
+   </div>
+*/
+
+:root {
+  /* Palette */
+  --bg: #f4f5f7;
+  --surface: #ffffff;
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --text: #1f2328;
+  --text-muted: #6b7280;
+  --danger: #dc2626;
+  --danger-hover: #b91c1c;
+  --border: #e5e7eb;
+
+  /* Typography */
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Spacing scale */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+
+  /* Radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: var(--space-6) var(--space-4);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.4;
+}
+
+.app {
+  width: 100%;
+  max-width: 520px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+}
+
+.app h1 {
+  margin: 0 0 var(--space-5);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.task-form {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.task-input {
+  flex: 1;
+  min-width: 0;
+  padding: var(--space-3);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
+.task-input::placeholder {
+  color: var(--text-muted);
+}
+
+.add-btn {
+  padding: var(--space-3) var(--space-4);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  color: #fff;
+  background: var(--primary);
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.add-btn:hover {
+  background: var(--primary-hover);
+}
+
+.task-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.task-list:empty::before {
+  content: "No tasks yet — add one above.";
+  display: block;
+  padding: var(--space-4) 0;
+  color: var(--text-muted);
+  text-align: center;
+}
+
+.task {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+}
+
+.task-checkbox {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  min-width: 44px; /* comfortable touch target, checkbox stays visually centered */
+  min-height: 44px;
+  margin: -12px; /* offset the padded touch target so layout doesn't grow */
+  padding: 12px;
+  cursor: pointer;
+  accent-color: var(--primary);
+}
+
+.task-text {
+  flex: 1;
+  min-width: 0;
+  overflow-wrap: break-word;
+}
+
+/* Completed state: never rely on color alone — strike through + mute the text */
+.task.completed .task-text {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.task-delete {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  line-height: 1;
+  color: var(--danger);
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.task-delete:hover {
+  color: #fff;
+  background: var(--danger-hover);
+}
+
+/* Accessibility: visible focus ring on every interactive element */
+.task-input:focus-visible,
+.add-btn:focus-visible,
+.task-checkbox:focus-visible,
+.task-delete:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+@media (max-width: 400px) {
+  .app {
+    padding: var(--space-4);
+  }
+}
